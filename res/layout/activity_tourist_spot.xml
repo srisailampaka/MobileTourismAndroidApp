@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="#E8F2FE" >
+
+    <ImageView
+        android:id="@+id/ts_pic"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_launcher" />
+
+    <LinearLayout
+        android:id="@+id/details_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/ts_pic"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Golconda Fort"
+            android:textSize="18dp"
+            android:textStyle="italic|bold" />
+
+        <TextView
+            android:id="@+id/vicinicity_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Mehendi Patnam,Hyderabad-15"
+            android:textSize="16dp"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/details_layout"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/ts_pic" >
+
+        <Button
+            android:id="@+id/accomodation_button"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.7"
+            android:background="@drawable/bg_button"
+            android:padding="5dp"
+            android:text="Accomodation"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/event_button"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.3"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/bg_button"
+            android:padding="5dp"
+            android:text="events"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</RelativeLayout>
