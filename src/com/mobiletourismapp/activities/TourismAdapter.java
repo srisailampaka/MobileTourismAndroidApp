@@ -20,11 +20,13 @@ import android.widget.TextView;
 public class TourismAdapter extends ArrayAdapter<Result> {
 	private ArrayList<Result> detailsList;
 	private Context mContext;
+	private String  current;
 
-	public TourismAdapter(Context mContext, List<Result> detailList) {
+	public TourismAdapter(Context mContext, List<Result> detailList, String currrentlttlang) {
 		super(mContext, R.layout.activity_tourist_spot);
 		this.detailsList = (ArrayList<Result>) detailList;
 		this.mContext = mContext;
+		current=currrentlttlang;
 
 	}
 
@@ -53,6 +55,7 @@ public class TourismAdapter extends ArrayAdapter<Result> {
 				// TODO Auto-generated method stub
 Intent intent=new Intent(mContext,AccomEventPlacesActivity.class);
 intent.putExtra("from", "0");
+intent.putExtra("accod", current);
 mContext.startActivity(intent);
 			}
 		});
@@ -62,6 +65,8 @@ mContext.startActivity(intent);
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent=new Intent(mContext,AccomEventPlacesActivity.class);
+				intent.putExtra("from", "1");
+				intent.putExtra("accod", current);
 				mContext.startActivity(intent);
 			}
 		});

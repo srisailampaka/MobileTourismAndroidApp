@@ -49,6 +49,7 @@ public class WeatherInfoActivity extends Activity implements YahooWeatherInfoLis
 	private Button mBtSearch;
 	private Button mBtGPS;
 	private LinearLayout mWeatherInfosLayout;
+	private String address;
 
 	private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, 5000, true);
 
@@ -64,7 +65,8 @@ public class WeatherInfoActivity extends Activity implements YahooWeatherInfoLis
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.show();
-        
+        if(getIntent()!=null&&getIntent().getExtras()!=null)
+        {  address=getIntent().getExtras().getString("address");}
     	mTvTitle = (TextView) findViewById(R.id.textview_title);
 		mTvWeather0 = (TextView) findViewById(R.id.textview_weather_info_0);
 		mTvErrorMessage = (TextView) findViewById(R.id.textview_error_message);
@@ -73,6 +75,14 @@ public class WeatherInfoActivity extends Activity implements YahooWeatherInfoLis
         mEtAreaOfCity = (EditText) findViewById(R.id.edittext_area);
         
         mBtSearch = (Button) findViewById(R.id.search_weatherbutton);
+        
+        if(address==null)
+        {
+        	searchByGPS();
+        }else
+        {
+        	searchByPlaceName(address.replace("%20", " "));
+        }
         mBtSearch.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -100,7 +110,7 @@ public class WeatherInfoActivity extends Activity implements YahooWeatherInfoLis
 
         mWeatherInfosLayout = (LinearLayout) findViewById(R.id.weather_infos);
      
-        searchByGPS();
+       // searchByGPS();
     }
     
 	@Override

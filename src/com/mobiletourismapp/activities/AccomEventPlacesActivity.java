@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
@@ -21,37 +22,54 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class AccomEventPlacesActivity extends Activity implements ResponseHandler {
+public class AccomEventPlacesActivity extends Activity implements
+		ResponseHandler {
 	private Button weatherButton;
 	private ListView listview;
 	private ProgressDialog progressDialog;
 	private ArrayList<Tourism> tourismList = new ArrayList<Tourism>();
-	private String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=17.3840500,78.4563600&radius=1000&types=hindu_temple&key=AIzaSyBoUm5FkU_OoADj6wzlKfdRy1NyLxT7Lv0";
-private String type;
+	private String type;
+	private String lattlang;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_acc_event);
-		if(getIntent()!=null&&getIntent().getExtras()!=null)
-		{
-			if(getIntent().getExtras().getString(type).equalsIgnoreCase("0"))
-			{type="hotels";
-			}else if(getIntent().getExtras().getString(type).equalsIgnoreCase("1"))
-			{
+		if (getIntent() != null && getIntent().getExtras() != null) {
+			lattlang=getIntent().getExtras().getString("accod");
+			if (getIntent().getExtras().getString("from").equalsIgnoreCase("0")) {
+				type = "hotel";
+			} else if (getIntent().getExtras().getString("from")
+					.equalsIgnoreCase("1")) {
+				type = "event";
 			}
 		}
+		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lattlang+"+&radius=500000&name="+type+"&key=AIzaSyCCPYEQStKfydPLRx4SS139okRUDg_enO4";
 		listview = (ListView) findViewById(R.id.list_view);
 		(new GetResonseAsync(AccomEventPlacesActivity.this, this)).execute(url);
 
-		
 	}
 
 	@Override
-	public void onSuccess(Tourism list) {
+	public void onSuccess(String jsonStr) {
+		Tourism tourismList = null;
 
-		AccEventAdapter adapter = new AccEventAdapter(getApplicationContext(), list.getResults());
-		listview.setAdapter(adapter);
+		if (jsonStr != null) {
+			try {
+				JSONObject jsonObj = new JSONObject(jsonStr);
+
+				Gson googleJson = new Gson();
+
+				tourismList = googleJson.fromJson(jsonStr.toString(),
+						Tourism.class);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			AccEventAdapter adapter = new AccEventAdapter(
+					getApplicationContext(), tourismList.getResults());
+			listview.setAdapter(adapter);
+		}
 	}
 
 	@Override

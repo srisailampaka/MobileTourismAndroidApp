@@ -13,7 +13,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-public class GetResonseAsync extends AsyncTask<String, Void,Tourism> {
+public class GetResonseAsync extends AsyncTask<String, Void,String> {
 private ProgressDialog pDialog;
 private Context mContext;
 private ResponseHandler handler;
@@ -33,7 +33,7 @@ private ResponseHandler handler;
 	}
 
 	@Override
-	protected Tourism doInBackground(String... params) {
+	protected String doInBackground(String... params) {
 		// TODO Auto-generated method stub
 		ServiceHandler sh = new ServiceHandler();
 		Tourism	tourismList = null ;
@@ -43,26 +43,13 @@ private ResponseHandler handler;
 
         Log.d("Response: ", "> " + jsonStr);
 
-        if (jsonStr != null) {
-            try {
-                JSONObject jsonObj = new JSONObject(jsonStr);
-                 
-                Gson googleJson = new Gson();
-
-				tourismList = googleJson.fromJson(jsonStr.toString(), Tourism.class);
-                }
-             catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.e("ServiceHandler", "Couldn't get any data from the url");
-        }
-		return tourismList;
+        
+		return jsonStr;
 
 	}
 
 	@Override
-	protected void onPostExecute(Tourism result) {
+	protected void onPostExecute(String result) {
 		// TODO Auto-generated method stub
 		super.onPostExecute(result);
 		pDialog.dismiss();
