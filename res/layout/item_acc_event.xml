@@ -2,7 +2,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="#E8F2FE" >
+    android:background="@android:color/black" >
 
     <ImageView
         android:id="@+id/ts_pic"
@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Golconda Fort"
             android:textSize="18dp"
+            android:textColor="@android:color/white"
             android:textStyle="italic|bold" />
 
         <TextView
@@ -34,6 +35,7 @@
             android:layout_marginTop="10dp"
             android:text="Mehendi Patnam,Hyderabad-15"
             android:textSize="16dp"
+            android:textColor="@android:color/white"
             android:textStyle="italic" />
     </LinearLayout>
 

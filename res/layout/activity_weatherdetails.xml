@@ -14,10 +14,26 @@
         android:text="Get Weather Details"
         android:textColor="@android:color/white" />
 
-    <ListView
-        android:id="@+id/list_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-    </ListView>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+ >
+
+        <TextView
+            android:id="@+id/no_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="NO Details for this location"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </ListView>
+    </RelativeLayout>
 
 </LinearLayout>

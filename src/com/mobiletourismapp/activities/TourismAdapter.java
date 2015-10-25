@@ -41,7 +41,7 @@ public class TourismAdapter extends ArrayAdapter<Result> {
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		View view = inflater.inflate(R.layout.activity_tourist_spot, null);
-		Result details = detailsList.get(position);
+		final Result details = detailsList.get(position);
 		ImageView icon = (ImageView) view.findViewById(R.id.ts_pic);
 		TextView name = (TextView) view.findViewById(R.id.name);
 		TextView vicinicity = (TextView) view.findViewById(R.id.vicinicity_address);
@@ -55,7 +55,7 @@ public class TourismAdapter extends ArrayAdapter<Result> {
 				// TODO Auto-generated method stub
 Intent intent=new Intent(mContext,AccomEventPlacesActivity.class);
 intent.putExtra("from", "0");
-intent.putExtra("accod", current);
+intent.putExtra("accod", details.getGeometry().getLocation().getLat()+","+details.getGeometry().getLocation().getLng());
 mContext.startActivity(intent);
 			}
 		});
@@ -66,7 +66,7 @@ mContext.startActivity(intent);
 				// TODO Auto-generated method stub
 				Intent intent=new Intent(mContext,AccomEventPlacesActivity.class);
 				intent.putExtra("from", "1");
-				intent.putExtra("accod", current);
+				intent.putExtra("accod", details.getGeometry().getLocation().getLat()+","+details.getGeometry().getLocation().getLng());
 				mContext.startActivity(intent);
 			}
 		});

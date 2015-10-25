@@ -21,31 +21,33 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
-public class AccomEventPlacesActivity extends Activity implements
-		ResponseHandler {
+public class AccomEventPlacesActivity extends Activity implements ResponseHandler {
 	private Button weatherButton;
 	private ListView listview;
 	private ProgressDialog progressDialog;
 	private ArrayList<Tourism> tourismList = new ArrayList<Tourism>();
 	private String type;
 	private String lattlang;
+	private TextView noLocations;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_acc_event);
+		noLocations = (TextView) findViewById(R.id.no_details);
 		if (getIntent() != null && getIntent().getExtras() != null) {
-			lattlang=getIntent().getExtras().getString("accod");
+			lattlang = getIntent().getExtras().getString("accod");
 			if (getIntent().getExtras().getString("from").equalsIgnoreCase("0")) {
 				type = "hotel";
-			} else if (getIntent().getExtras().getString("from")
-					.equalsIgnoreCase("1")) {
+			} else if (getIntent().getExtras().getString("from").equalsIgnoreCase("1")) {
 				type = "event";
 			}
 		}
-		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lattlang+"+&radius=500000&name="+type+"&key=AIzaSyCCPYEQStKfydPLRx4SS139okRUDg_enO4";
+		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lattlang
+				+ "+&radius=50000&name=" + type + "&key=AIzaSyCCPYEQStKfydPLRx4SS139okRUDg_enO4";
 		listview = (ListView) findViewById(R.id.list_view);
 		(new GetResonseAsync(AccomEventPlacesActivity.this, this)).execute(url);
 
@@ -61,14 +63,20 @@ public class AccomEventPlacesActivity extends Activity implements
 
 				Gson googleJson = new Gson();
 
-				tourismList = googleJson.fromJson(jsonStr.toString(),
-						Tourism.class);
+				tourismList = googleJson.fromJson(jsonStr.toString(), Tourism.class);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			AccEventAdapter adapter = new AccEventAdapter(
-					getApplicationContext(), tourismList.getResults());
-			listview.setAdapter(adapter);
+			if (tourismList != null && tourismList.getResults().size() > 0) {
+
+				noLocations.setVisibility(View.GONE);
+				listview.setVisibility(View.VISIBLE);
+				AccEventAdapter adapter = new AccEventAdapter(getApplicationContext(), tourismList.getResults());
+				listview.setAdapter(adapter);
+			} else {
+				noLocations.setVisibility(View.VISIBLE);
+				listview.setVisibility(View.GONE);
+			}
 		}
 	}
 

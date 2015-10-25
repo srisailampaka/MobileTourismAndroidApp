@@ -27,9 +27,11 @@ import zh.wang.android.apis.yweathergetter4a.YahooWeatherInfoListener;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,10 +52,11 @@ public class WeatherInfoActivity extends Activity implements YahooWeatherInfoLis
 	private Button mBtGPS;
 	private LinearLayout mWeatherInfosLayout;
 	private String address;
-
+	private Button clothes;
 	private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, 5000, true);
 
     private ProgressDialog mProgressDialog;
+    private String details;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,16 @@ public class WeatherInfoActivity extends Activity implements YahooWeatherInfoLis
         mEtAreaOfCity = (EditText) findViewById(R.id.edittext_area);
         
         mBtSearch = (Button) findViewById(R.id.search_weatherbutton);
-        
+        clothes=(Button)findViewById(R.id.clothes_button);
+		clothes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(WeatherInfoActivity.this,BringClothesActivity.class);
+				intent.putExtra("details", details);
+				startActivity(intent);
+			}
+		});
         if(address==null)
         {
         	searchByGPS();
@@ -131,6 +143,7 @@ public class WeatherInfoActivity extends Activity implements YahooWeatherInfoLis
         		mEtAreaOfCity.setText("YOUR CURRENT LOCATION");
         	}
         	mWeatherInfosLayout.removeAllViews();
+        	details=weatherInfo.getCurrentText();
 			mTvTitle.setText(
 			        weatherInfo.getTitle() + "\n"
 					+ weatherInfo.getWOEIDneighborhood() + ", "

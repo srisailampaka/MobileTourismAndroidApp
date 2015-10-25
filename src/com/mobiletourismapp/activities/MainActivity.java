@@ -4,11 +4,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,7 +25,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -27,11 +33,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 //https://api.theprintful.com/countries
 public class MainActivity extends Activity implements LocationListener {
@@ -231,6 +232,14 @@ public class MainActivity extends Activity implements LocationListener {
 						for (int i = 0; i < cityList.size(); i++) {
 							cityName.add(cityList.get(i).getName());
 						}
+						Collections.sort(cityName, new Comparator<String>() {
+
+							@Override
+							public int compare(String lhs, String rhs) {
+								// TODO Auto-generated method stub
+								return lhs.compareTo(rhs);
+							}
+						});
 						// TODO Auto-generated method stub
 						ArrayAdapter<String> citiesSpinnerArrayAdapter = new ArrayAdapter<String>(
 								MainActivity.this,
